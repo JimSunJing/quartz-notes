@@ -9,3 +9,8 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+*.pyc
+__pycache__/
+tools/x_url_ingestor/build/
+tools/x_url_ingestor/dist/
+tools/x_url_ingestor/*.spec

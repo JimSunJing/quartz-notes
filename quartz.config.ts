@@ -1,6 +1,18 @@
 import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
 
+function normalizeBaseUrl(url?: string): string | undefined {
+  if (!url) return undefined
+  return url.replace(/^https?:\/\//, "").replace(/\/$/, "")
+}
+
+const inferredBaseUrl =
+  normalizeBaseUrl(process.env.QUARTZ_BASE_URL) ??
+  normalizeBaseUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ??
+  normalizeBaseUrl(process.env.URL) ??
+  normalizeBaseUrl(process.env.DEPLOY_PRIME_URL) ??
+  "localhost:8080"
+
 /**
  * Quartz 4 Configuration
  *
@@ -16,7 +28,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
+    baseUrl: inferredBaseUrl,
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
